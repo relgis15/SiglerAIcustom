@@ -1,5 +1,5 @@
 (() => {
-  const iframeURL = "https://https://sigler-ai-web-git-main-relgis15s-projects.vercel.app/"; 
+  const iframeURL = "https://sigler-ai-web-git-main-relgis15s-projects.vercel.app/"; 
   const fontURL = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
 
   const style = document.createElement('style');
