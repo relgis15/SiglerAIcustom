@@ -1,53 +1,41 @@
 (() => {
-  const iframeURL = "https://sigler-ai-web-git-main-relgis15s-projects.vercel.app/"; 
-  const fontURL = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
+  const iframeURL = "https://sigler-ai-web.vercel.app/"; // Replace with your live URL
+  const imageIconURL = "https://yourdomain.com/chat-icon.png";
 
-  const style = document.createElement('style');
-  style.textContent = `
-    @import url('${fontURL}');
-    #sigler-chat-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 16px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    #sigler-chat-iframe {
-      position: fixed;
-      bottom: 70px;
-      right: 20px;
-      width: 360px;
-      height: 500px;
-      border: none;
-      border-radius: 12px;
-      display: none;
-      z-index: 9998;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-  `;
-  document.head.appendChild(style);
+  // Inject Tailwind from CDN
+  const tailwind = document.createElement("script");
+  tailwind.src = "https://cdn.tailwindcss.com";
+  document.head.appendChild(tailwind);
 
-  const button = document.createElement('button');
-  button.id = 'sigler-chat-button';
-  button.innerText = '💬 Chat with us';
-  document.body.appendChild(button);
+  // Inject Inter font
+  const fontLink = document.createElement("link");
+  fontLink.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
+  fontLink.rel = "stylesheet";
+  document.head.appendChild(fontLink);
 
-  const iframe = document.createElement('iframe');
-  iframe.id = 'sigler-chat-iframe';
-  iframe.src = iframeURL;
-  document.body.appendChild(iframe);
+  // Wait for Tailwind to load
+  tailwind.onload = () => {
+    const style = document.createElement("style");
+    style.innerHTML = `body { font-family: 'Inter', sans-serif; }`;
+    document.head.appendChild(style);
 
-  let isOpen = false;
-  button.addEventListener('click', () => {
-    isOpen = !isOpen;
-    iframe.style.display = isOpen ? 'block' : 'none';
-  });
+    const button = document.createElement("button");
+    button.innerHTML = '<img src="' + imageIconURL + '" alt="Chat Icon" class="w-6 h-6 mr-2 inline" /> Chat with us';
+    button.className = "fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-full shadow-lg flex items-center space-x-2 text-lg transition-transform transform hover:scale-105";
+    button.id = "sigler-chat-button";
+
+    const iframe = document.createElement("iframe");
+    iframe.src = iframeURL;
+    iframe.className = "fixed bottom-24 right-6 w-[360px] h-[500px] border-none rounded-xl shadow-2xl hidden z-40 transition-opacity duration-300";
+    iframe.id = "sigler-chat-iframe";
+
+    document.body.appendChild(button);
+    document.body.appendChild(iframe);
+
+    let isOpen = false;
+    button.addEventListener("click", () => {
+      isOpen = !isOpen;
+      iframe.classList.toggle("hidden", !isOpen);
+    });
+  };
 })();
